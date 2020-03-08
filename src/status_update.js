@@ -1,30 +1,24 @@
 import React, { Component } from 'react'
 // import Status from './status_create'
-import { Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-let checkedValues = []
+let checkedValues = [];
+let currStatus = {};
 class UpdateStatus extends Component {
     constructor(props){
         super(props);
-        // this.props = props;
-        this.state = {
-            name: this.props.status.name,
-            trans: this.props.status.checkedValues,
-            isCurr: this.props.isCurr
-        };
+        this.handleDelete = this.handleDelete.bind(this);
+        currStatus = this.props.location.query;
+        console.log(currStatus)
     }
 
     handleDelete(){
-        if (!this.state.isCurr){
-            this.setState({
-                name: '',
-                trans: []
-            })
+        let deleteStatus = {
+            pathname: '/main',
+            deleted: currStatus
         }
-        else{
-            console,log("is current status, could not be deleted")
-        }
+        this.props.history.push('/main')
     }
 
     handleCheckBoxChange(e){
@@ -49,7 +43,7 @@ class UpdateStatus extends Component {
 
         return(
             <div>
-                <p>Status Name: {this.state.name}</p>
+                <p>Status Name: </p>
                 <Button appearance="secondary" onClick={this.handleDelete}>Delete</Button>
                 <div>
                     <p>Could be transfer to:</p><br />
@@ -69,3 +63,5 @@ class UpdateStatus extends Component {
         )
     }
 }
+
+export default UpdateStatus;

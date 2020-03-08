@@ -1,20 +1,22 @@
 import React, { Component } from 'react'
 import { Form, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
+import {createBrowserHistory} from 'history';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 let checkedValues = [];
 let statusName = '';
+let id = 0;
+// const history = createBrowserHistory();
 
-class Status extends Component{
+
+
+class CreateStatus extends Component{
     constructor(props){
         super(props);
         this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
         this.handleStatusNameChange = this.handleStatusNameChange.bind(this);
         this.handleCreate = this.handleCreate.bind(this);
-        this.state = {
-            name: '',
-            trans: []
-        }
     }
  
     handleStatusNameChange(e){
@@ -34,14 +36,27 @@ class Status extends Component{
     }
 
     handleCreate(){
-        this.setState({
-            name: statusName,
-            trans: checkedValues
-        })
-        console.log(this.state)
+        if (statusName !== '' && checkedValues !== []){
+            let data = {
+                id: id++,
+                name: statusName,
+                trans: checkedValues
+            }
+            let path = {
+                pathname: '/main',
+                query: data
+            }
+            statusName = '';
+            checkedValues = [];
+            this.props.history.push(path)
+        }
+        else{
+            console.log('empty name or status')
+        }
     }
 
     render(){
+        const name = statusName;
         return(
             <div>
                 <div>
@@ -60,6 +75,7 @@ class Status extends Component{
                     </Form>
                 </div>
                 <br />
+                
                 <div>
                     <Button appearance="primary" onClick={this.handleCreate}>Create Status</Button>
                 </div>
@@ -68,4 +84,4 @@ class Status extends Component{
     }
 }
 
-export default Status;
+export default CreateStatus;
