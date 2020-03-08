@@ -1,24 +1,30 @@
 import React, { Component } from 'react'
-import { Form, Button } from 'react-bootstrap';
+// import Status from './status_create'
+import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-let checkedValues = [];
-let statusName = '';
-
-class Status extends Component{
+let checkedValues = []
+class UpdateStatus extends Component {
     constructor(props){
         super(props);
-        this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
-        this.handleStatusNameChange = this.handleStatusNameChange.bind(this);
-        this.handleCreate = this.handleCreate.bind(this);
+        // this.props = props;
         this.state = {
-            name: '',
-            trans: []
-        }
+            name: this.props.status.name,
+            trans: this.props.status.checkedValues,
+            isCurr: this.props.isCurr
+        };
     }
- 
-    handleStatusNameChange(e){
-        statusName = e.target.value
+
+    handleDelete(){
+        if (!this.state.isCurr){
+            this.setState({
+                name: '',
+                trans: []
+            })
+        }
+        else{
+            console,log("is current status, could not be deleted")
+        }
     }
 
     handleCheckBoxChange(e){
@@ -33,24 +39,21 @@ class Status extends Component{
         console.log(checkedValues)
     }
 
-    handleCreate(){
+    handleUpdate(){
         this.setState({
-            name: statusName,
             trans: checkedValues
         })
-        console.log(this.state)
     }
 
     render(){
+
         return(
             <div>
+                <p>Status Name: {this.state.name}</p>
+                <Button appearance="secondary" onClick={this.handleDelete}>Delete</Button>
                 <div>
-                    <p>Status Name: <input id='createStatus' type='text' onChange={(e) => this.handleStatusNameChange(e)}/></p>
-                </div>
-                <div>
-                    <p>Could be transfer to:</p>
-                </div>
-                <div>
+                    <p>Could be transfer to:</p><br />
+                    <div>
                     <Form id='transTo'>
                         <input type='checkbox' value='self' onChange={(e) => this.handleCheckBoxChange(e)}/>Self<br />
                         <input type='checkbox' value='status_A' onChange={(e) => this.handleCheckBoxChange(e)}/>Status A<br />
@@ -58,14 +61,11 @@ class Status extends Component{
                         <input type='checkbox' value='status_C' onChange={(e) => this.handleCheckBoxChange(e)}/>Status C<br />
                         <input type='checkbox' value='status_D' onChange={(e) => this.handleCheckBoxChange(e)}/>Status D<br />
                     </Form>
+                    <br />
+                    <Button appearance="primary" onClick={this.handleUpdate}>Update</Button>
                 </div>
-                <br />
-                <div>
-                    <Button appearance="primary" onClick={this.handleCreate}>Create Status</Button>
                 </div>
             </div>
-        );
+        )
     }
 }
-
-export default Status;

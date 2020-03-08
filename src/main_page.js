@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, ButtonToolbar } from 'rsuite';
+import { Dropdown, ButtonToolbar } from 'react-bootstrap';
 
 
 class Manager extends Component {
@@ -24,6 +24,13 @@ class Manager extends Component {
         return(
             <div>
                 <p>Current status is</p>
+                <Dropdown title="Select a status">
+                        <Dropdown.Item>Self</Dropdown.Item>
+                        <Dropdown.Item>Status A</Dropdown.Item>
+                        <Dropdown.Item>Status B</Dropdown.Item>
+                        <Dropdown.Item>Status C</Dropdown.Item>
+                        <Dropdown.Item>Status D</Dropdown.Item>
+                </Dropdown>
             </div>
         );
     }
